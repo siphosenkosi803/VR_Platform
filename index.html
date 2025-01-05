@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR Travel & Events Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #2A2D3E;
+            --accent: #FF6B6B;
+            --text: #E0E0E0;
+            --background: #1A1B26;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 27, 38, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--secondary);
+                padding: 1rem;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -5px);
+            }
+        }
+
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+    .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/Vintage\ 3D\ Cinema\ Audience.jpeg') center/cover no-repeat; 
+    z-index: -1;
+}
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--accent), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 3rem;
+        }
+
+        .destinations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .destination-card {
+            position: relative;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .destination-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .destination-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        }
+        event-card {
+            background: var(--secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-date {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-title {
+            margin-bottom: 1rem;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            color: var(--primary);
+            margin: 1.5rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .pricing-features {
+            flex-grow: 1;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            margin-bottom: 0.5rem;
+            list-style: none;
+        }
+
+        .pricing-features li::before {
+            content: "✓";
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .pricing-card .cta-button {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+        }
+
+        .pricing-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 600px; /* Adjust this value based on your content */
+}
+
+        .footer {
+            background: var(--secondary);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: linear-gradient(45deg, var(--primary), transparent);
+            border-radius: 50%;
+            filter: blur(20px);
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">VRxplore</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#events">Events</a>
+                <a href="#destinations">Destinations</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="floating-elements" id="floatingElements"></div>
+        <div class="hero-bg"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Travel the World. Experience Global Events.</h1>
+            <p></p>
+            <a href="#explore" class="cta-button">Start Your Virtual Adventure</a>
+        </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">How It Works</h2>
+            <p class="section-subtitle" data-aos="fade-up">Experience the world in three simple steps</p>
+            
+            <div class="features">
+                <div class="feature-card" data-aos="fade-up">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Choose Your Experience</h3>
+                    <p>Browse through our curated collection of global events and destinations.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Set Up VR</h3>
+                    <p>Connect your VR headset or access through our mobile app.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">✨</div>
+                    <h3>Immerse Yourself</h3>
+                    <p>Step into your chosen experience and explore like you're really there.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="destinations">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Popular Destinations</h2>
+            <p class="section-subtitle" data-aos="fade-up">Explore iconic locations from around the globe</p>
+            
+            <div class="destinations">
+                <div class="destination-card" data-aos="fade-up">
+                    <img src="images/Serenity by the Seine with the Eiffel Tower.jpeg" alt="Paris">
+                    <div class="destination-info">
+                        <h3>Paris, France</h3>
+                        <p>Experience the City of Light</p>
+                    </div>
+                </div>
+                <div class="destination-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="images/Colorful Attire in Urban Japan.jpeg" alt="Tokyo">
+                    <div class="destination-info">
+                        <h3>Tokyo, Japan</h3>
+                        <p>Explore the bustling metropolis</p>
+                    </div>
+                </div>
+                <div class="destination-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="images/Twilight Vibrance on Times Square.jpeg" alt="New York">
+                    <div class="destination-info">
+                        <h3>New York, USA</h3>
+                        <p>Discover the city that never sleeps</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="events">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Upcoming Virtual Events</h2>
+            <p class="section-subtitle" data-aos="fade-up">Join live events from anywhere in the world</p>
+            
+            <div class="features">
+                <div class="event-card" data-aos="fade-up">
+                    <img src="images/Fact-Durban-Rocks-image-640x640.jpg" alt="Concert" class="event-image">
+                    <div class="event-content">
+                        <div class="event-date">Dec 31, 2025</div>
+                        <h3 class="event-title">Fact Durban Rocks</h3>
+                        <p>Experience the most spectacular NYE celebration in Durban, South Africa.</p>
+                    </div>
+                </div>
+                <div class="event-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="images/African Woman Serene Profile.jpeg" alt="Festival" class="event-image">
+                    <div class="event-content">
+                        <div class="event-date">Jun 15, 2025</div>
+                        <h3 class="event-title">National Arts Festival</h3>
+                        <p>Immerse yourself in this spectacular 11 day  arts festival in Grahamstown, South Africa.</p>
+                    </div>
+                </div>
+                <div class="event-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="images/Little Superhero.jpeg" alt="Conference" class="event-image">
+                    <div class="event-content">
+                        <div class="event-date">May 3, 2025</div>
+                        <h3 class="event-title">Free Comic Book Day</h3>
+                        <p>Join the world's leading coming book celebration using virtual reality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="pricing">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Choose Your Journey</h2>
+            <p class="section-subtitle" data-aos="fade-up">Find the perfect plan for your virtual adventures</p>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card" data-aos="fade-up">
+                    <h3>Explorer</h3>
+                    <div class="price">$19<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>5 Virtual Destinations</li>
+                        <li>2 Live Events per month</li>
+                        <li>HD Quality Streaming</li>
+                        <li>Basic VR Support</li>
+                        <li>Community Access</li>
+                    </ul>
+                    <a href="#" class="cta-button">Get Started</a>
+                </div>
+                
+                <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="100">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Adventurer</h3>
+                    <div class="price">$39<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited Destinations</li>
+                        <li>5 Live Events per month</li>
+                        <li>4K Quality Streaming</li>
+                        <li>Advanced VR Support</li>
+                        <li>Priority Access to Events</li>
+                        <li>Exclusive Community Features</li>
+                    </ul>
+                    <a href="#" class="cta-button">Get Started</a>
+                </div>
+                
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Globetrotter</h3>
+                    <div class="price">$79<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited Everything</li>
+                        <li>Unlimited Live Events</li>
+                        <li>8K Quality Streaming</li>
+                        <li>Premium VR Support</li>
+                        <li>Early Access to New Features</li>
+                        <li>Personal Virtual Guide</li>
+                        <li>Custom Event Planning</li>
+                    </ul>
+                    <a href="#" class="cta-button">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>VRxplore</h3>
+                <p>Experience the world through virtual reality. Travel to exotic destinations and attend exclusive events from the comfort of your home.</p>
+                <div class="social-links">
+                    <a href="#">📱</a>
+                    <a href="#">💬</a>
+                    <a href="#">📸</a>
+                    <a href="#">🐦</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">System Requirements</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 VRxplore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Create floating elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const numElements = 5;
+
+            for (let i = 0; i < numElements; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.width = Math.random() * 300 + 100 + 'px';
+                element.style.height = element.style.width;
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.animationDelay = (Math.random() * 10) + 's';
+                element.style.animationDuration = (Math.random() * 20 + 10) + 's';
+                container.appendChild(element);
+            }
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(26, 27, 38, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(26, 27, 38, 0.8)';
+            }
+        });
+
+        // Initialize
+        createFloatingElements();
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
