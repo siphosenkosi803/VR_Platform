@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VR Travel & Events Platform</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #6C63FF;
@@ -12,16 +15,18 @@
             --accent: #FF6B6B;
             --text: #E0E0E0;
             --background: #1A1B26;
+            --font-primary: 'Press Start 2P', cursive;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: var(--font-primary);
         }
 
         body {
+            font-size: 14px;
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
@@ -148,11 +153,13 @@
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3.0rem;
             margin-bottom: 1.5rem;
             background: linear-gradient(45deg, var(--accent), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: 2px; /* Added for better readability with Bangers font */
         }
 
         .hero p {
@@ -228,6 +235,7 @@
         }
 
         .destination-card {
+            
             position: relative;
             height: 300px;
             border-radius: 15px;
@@ -448,6 +456,61 @@
                 display: none;
             }
         }
+
+        .nav-links a {
+            font-size: 12px; /* Smaller font size for navigation */
+            padding: 0.5rem 1rem;
+        }
+
+        /* Adjust headings */
+        h1, h2, h3, h4, h5, h6 {
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        /* Adjust section titles */
+        .section-title {
+            font-size: 1.8rem; /* Adjusted from 2.5rem */
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem; /* Adjusted for readability */
+            line-height: 1.6;
+        }
+
+        /* Adjust pricing section */
+        .price {
+            font-size: 2rem; /* Adjusted from 3rem */
+        }
+
+        .price span {
+            font-size: 0.8rem;
+        }
+
+        /* Adjust card content */
+        .feature-card p,
+        .event-card p,
+        .pricing-features li {
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                font-size: 12px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links a {
+                font-size: 10px;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -589,7 +652,7 @@
                 </div>
                 
                 <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="100">
-                    <div class="popular-badge">Most Popular</div>
+                    
                     <h3>Adventurer</h3>
                     <div class="price">$39<span>/month</span></div>
                     <ul class="pricing-features">
